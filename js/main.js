@@ -10,30 +10,47 @@ if (navigator.geolocation) {
 			var latitude = pos.coords.latitude;
 			var longitude = pos.coords.longitude;
 
-			$(".show_result").append("緯度：" + latitude + "<br>");
-			$(".show_result").append("経度：" + longitude);
+			$(".show_lat_long").append("緯度：" + latitude + "<br>");
+			$(".show_lat_long").append("経度：" + longitude);
 
 			//リクエスト用のURIを準備
-			var api = 'http://api.gnavi.co.jp/ver1/RestSearchAPI/?';
-			var keyid = '24a0a8aa568179b92ea04ef978d792ff';
-			var range = 2;
+			var api        = 'http://api.gnavi.co.jp/ver1/RestSearchAPI/?';
+			var keyid      = '24a0a8aa568179b92ea04ef978d792ff';
+			//var format     = 'json' '&format=' + format + 
+			var range      = 2;
 			var requestUri = api + 'keyid=' + keyid + '&latitude=' + latitude + '&longitude=' + longitude+ '&range=' + range;
 
 
 			$.ajax({
 				type: 'post',
-				datatype: 'json',
+				datatype: '',
 				url: 'ajax.php',
 				data: {
 					item:requestUri
 				}
-			}).then(function(data){console.log(data)});
+			}).then(function parse_xml(shop_data){
+				$(shop_data).find('rest').each(disp);
+			});
 
-/*
-			$.ajax({url: requestUri})
-			.then(function(data){console.log(data)});
-*/
 
+function disp(){  
+  
+    //各要素を変数に格納  
+    var $latitude = $(this).find('latitude').text();  
+    var $longitude = $(this).find('longitude').text();  
+    var $url = $(this).find('url').text();  
+    var $name = $(this).find('name').text();  
+  
+    //HTMLを生成  
+    $('<tr>'+
+        '<td><a href="'+$url+'">'+$name+'</a></td>'+ 
+        '<th>緯度</th>'+  
+        '<td>'+$latitude+'</td>'+
+        '<th>経度</th>'+ 
+        '<th>'+$longitude+'</th>'+ 
+      '</tr>'
+        ).appendTo('table.tbl tbody');  
+}  
 
 
 
