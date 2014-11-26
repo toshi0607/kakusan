@@ -10,14 +10,35 @@ if (navigator.geolocation) {
 			var latitude = pos.coords.latitude;
 			var longitude = pos.coords.longitude;
 
+			$(".show_result").append("緯度：" + latitude + "<br>");
+			$(".show_result").append("経度：" + longitude);
+
 			//リクエスト用のURIを準備
 			var api = 'http://api.gnavi.co.jp/ver1/RestSearchAPI/?';
 			var keyid = '24a0a8aa568179b92ea04ef978d792ff';
+/*
 			var range = 2;
 			var requestUri = api + 'keyid=' + keyid + '&latitude=' + latitude + '&longitude=' + longitude+ '&range=' + range;
+*/
 
+			var requestUri = api + 'keyid=' + keyid + '&area=AREA110';
+
+			$.ajax({
+				type: 'post',
+				datatype: 'json',
+				url: 'ajax.php',
+				data: {
+					item:requestUri
+				}
+			}).then(function(data){console.log(data)});
+
+/*
 			$.ajax({url: requestUri})
 			.then(function(data){console.log(data)});
+*/
+
+
+
 
 
 		},
