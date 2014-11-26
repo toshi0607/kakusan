@@ -16,12 +16,9 @@ if (navigator.geolocation) {
 			//リクエスト用のURIを準備
 			var api = 'http://api.gnavi.co.jp/ver1/RestSearchAPI/?';
 			var keyid = '24a0a8aa568179b92ea04ef978d792ff';
-/*
 			var range = 2;
 			var requestUri = api + 'keyid=' + keyid + '&latitude=' + latitude + '&longitude=' + longitude+ '&range=' + range;
-*/
 
-			var requestUri = api + 'keyid=' + keyid + '&area=AREA110';
 
 			$.ajax({
 				type: 'post',
