@@ -18,8 +18,8 @@ if (navigator.geolocation) {
 
 			$(function(){
 				//現在地点の緯度経度を元に LatLngオブジェクトを作成する
-				console.log("check");
 				var latlng = new google.maps.LatLng(latitude, longitude);
+				//console.log(latlng);
 				createMap(latlng);
 			});
 
@@ -27,17 +27,20 @@ if (navigator.geolocation) {
 			function createMap(latlng) {
 				//地図のオプション
 				var mapOption = {
-					zoom: 14, //ズームレベル
+					zoom: 16, //ズームレベル
 					center: latlng, //指定した場所を地図のセンターにする
 					mapTypeId: google.maps.MapTypeId.ROADMAP //地図のタイプ
 				};
 
+				//console.log(latlng);　OK
 				//Mapオブジェクトを作成
 				map = new google.maps.Map($("#map_canvas").get(0), mapOption);
+				
+				//console.log(map); OK
 				//マーカーを作成して現在位置に置く
 				var marker = new google.maps.Marker({ position: latlng, map: map });
+				//console.log(marker); OK
 			}
-
 
 
 			//食べログリクエスト用のURIを準備
@@ -67,6 +70,7 @@ if (navigator.geolocation) {
     			var $url       = $(this).find('url'      ).text();  
     			var $name      = $(this).find('name'     ).text();  
      			var $tel       = $(this).find('tel'      ).text();  
+     			//var new google.maps.LatLng($latitude, $longitude);
 
 
 
@@ -78,8 +82,12 @@ if (navigator.geolocation) {
         			'<th>経度   </th>'+ 
         				'<td>'+$longitude+'</td>'+ 
       		  		'<th>電話番号</th>'+
-        				'<td>'+$tel+      '</td>'+ 
+        				'<td>'+$tel+      '</td>'+
+       		  		'<th>アクセス</th>'+
+        				'<td><a href=# id></td>'+       				
       		  		'</tr>'
+
+
         		).appendTo('table.tbl tbody');  
 			}  
 
@@ -112,5 +120,17 @@ if (navigator.geolocation) {
 } else {
 	window.alert("このブラウザでは位置情報が取得できません");
 }
+
+/*
+
+$(function(){
+	$("#btn").click(function(latlng)
+		var marker = new google.maps.Marker({ position: latlng, map: map });
+
+	)
+})
+
+
+*/
 
 
