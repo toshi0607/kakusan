@@ -118,7 +118,7 @@ if (navigator.geolocation) {
 		}
     );
 } else {
-	window.alert("このブラウザでは位置情報が取得できません");
+	alert("このブラウザでは位置情報が取得できません");
 }
 
 /*
