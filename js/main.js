@@ -47,16 +47,21 @@ if (navigator.geolocation) {
 			var range      = 2;
 			var uriOption  = '&latitude=' + latitude + '&longitude=' + longitude+ '&range=' + range;
 
+			//each()実行毎に店舗緯度経度を格納
+			var markersInfo = [];
+
+			//each()実行回数カウント、店舗情報配列呼び出し用
+			var roopCount = 0;
+
 			$.ajax({
 				type:     'post',
 				datatype: 'xml',
 				url:      'ajax.php',
-				data: {
-					item:uriOption
-				}
+				data:     {item:uriOption}
 			}).then(function parse_xml(shop_data){
-				console.log(shop_data);
+				//console.log(shop_data); OK
 				$(shop_data).find('rest').each(disp);
+
 			});
 
 
@@ -67,26 +72,43 @@ if (navigator.geolocation) {
     			var $longitude = $(this).find('longitude').text();  
     			var $url       = $(this).find('url'      ).text();  
     			var $name      = $(this).find('name'     ).text();  
-     			var $tel       = $(this).find('tel'      ).text();  
-     			//var new google.maps.LatLng($latitude, $longitude);
+     			var $tel       = $(this).find('tel'      ).text();
 
+
+     			//each()実行毎にマーカー作成に用いる配列に緯度・経度を保存
+     			markersInfo.push($latitude, $longitude);
+
+     			//console.log(roopCount);　OK
 
 
     			//HTMLを生成  
     			$('<tr>'+
         				'<td><a href="'+$url+'">'+$name+'</a></td>'+ 
-        			'<th>緯度   </th>'+  
-        				'<td>'+$latitude+ '</td>'+
-        			'<th>経度   </th>'+ 
-        				'<td>'+$longitude+'</td>'+ 
       		  		'<th>電話番号</th>'+
-        				'<td>'+$tel+      '</td>'+
+        				'<td><a href="tel:'+$tel+ '">'+$tel+ '</a></td>'+
        		  		'<th>アクセス</th>'+
-        				'<td><a href=# id></td>'+       				
+        				'<td><button type="button" id="btn' + roopCount +'" value="'+ roopCount +'">地図に表示</button></td>'+ 
       		  		'</tr>'
+        		).appendTo('table.tbl tbody'); 
+
+     			roopCount++;
+				$("#btn0").click(function(){
+					//alert("チェック");
+					var num = $('#btn0').val();
+
+					var lat = markersInfo[num * 2    ];
+  					//console.log(lat);
+					var lng = markersInfo[num * 2 + 1];
+					//console.log(lng);
+
+					var latlng = new google.maps.LatLng(lat, lng);
+					//console.log(latlng);
+
+					var marker = new google.maps.Marker({ position: latlng, map: map });
+
+				});
 
 
-        		).appendTo('table.tbl tbody');  
 			}  
 
 
@@ -119,16 +141,9 @@ if (navigator.geolocation) {
 	alert("このブラウザでは位置情報が取得できません");
 }
 
+
 /*
-
 $(function(){
-	$("#btn").click(function(latlng)
-		var marker = new google.maps.Marker({ position: latlng, map: map });
 
-	)
-})
-
-
+});
 */
-
-
