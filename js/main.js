@@ -43,21 +43,19 @@ if (navigator.geolocation) {
 			}
 
 
-			//食べログリクエスト用のURIを準備
-			var api        = 'http://api.gnavi.co.jp/ver1/RestSearchAPI/?';
-			var keyid      = '24a0a8aa568179b92ea04ef978d792ff';
+			//食べログリクエスト用のURIのオプションを準備
 			var range      = 2;
-			var requestUri = api + 'keyid=' + keyid + '&latitude=' + latitude + '&longitude=' + longitude+ '&range=' + range;
+			var uriOption  = '&latitude=' + latitude + '&longitude=' + longitude+ '&range=' + range;
 
 			$.ajax({
 				type:     'post',
 				datatype: 'xml',
 				url:      'ajax.php',
 				data: {
-					item:requestUri
+					item:uriOption
 				}
 			}).then(function parse_xml(shop_data){
-				//console.log(shop_data);
+				console.log(shop_data);
 				$(shop_data).find('rest').each(disp);
 			});
 
@@ -114,7 +112,7 @@ if (navigator.geolocation) {
 					message = "位置情報取得中にタイムアウトしました。";
 					break;
 			}
-			window.alert(message);
+			alert(message);
 		}
     );
 } else {
