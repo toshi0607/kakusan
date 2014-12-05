@@ -87,14 +87,43 @@ if (navigator.geolocation) {
       		  		'<th>電話番号</th>'+
         				'<td><a href="tel:'+$tel+ '">'+$tel+ '</a></td>'+
        		  		'<th>アクセス</th>'+
-        				'<td><button type="button" id="btn' + roopCount +'" value="'+ roopCount +'">地図に表示</button></td>'+ 
+        				'<td><button type="button" id="btn" value="'+ roopCount +'">地図に表示</button></td>'+ 
       		  		'</tr>'
         		).appendTo('table.tbl tbody'); 
 
      			roopCount++;
-				$("#btn0").click(function(){
+
+				$(function(){
+					$("button").click(makeInfo);
+
+					function makeInfo(){
+					var num = $(this).val();
+					//console.log(num);
+					//console.log(roopCount);
+
+					var lat = markersInfo[num * 2    ];
+  					//console.log(lat);
+					var lng = markersInfo[num * 2 + 1];
+					//console.log(lng);
+
+					var latlng = new google.maps.LatLng(lat, lng);
+					//console.log(latlng);
+
+					var marker = new google.maps.Marker({ position: latlng, map: map });
+	}
+});
+
+
+/*
+
+				$(this).click(function(){
 					//alert("チェック");
-					var num = $('#btn0').val();
+			
+
+					var num = $('#btn').val();
+
+					alert(this.value);
+					console.log(roopCount);
 
 					var lat = markersInfo[num * 2    ];
   					//console.log(lat);
@@ -106,8 +135,10 @@ if (navigator.geolocation) {
 
 					var marker = new google.maps.Marker({ position: latlng, map: map });
 
+
 				});
 
+*/
 
 			}  
 
