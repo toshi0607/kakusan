@@ -59,7 +59,7 @@ if (navigator.geolocation) {
 				url:      'ajax.php',
 				data:     {item:uriOption}
 			}).then(function parse_xml(shop_data){
-				//console.log(shop_data); OK
+				console.log(shop_data);
 				$(shop_data).find('rest').each(disp);
 
 			});
@@ -74,7 +74,6 @@ if (navigator.geolocation) {
     			var $name      = $(this).find('name'     ).text();  
      			var $tel       = $(this).find('tel'      ).text();
 
-
      			//each()実行毎にマーカー作成に用いる配列に緯度・経度を保存
      			markersInfo.push($latitude, $longitude);
 
@@ -82,14 +81,14 @@ if (navigator.geolocation) {
 
 
     			//HTMLを生成  
-    			$('<tr>'+
-        				'<td><a href="'+$url+'">'+$name+'</a></td>'+ 
-      		  		'<th>電話番号</th>'+
-        				'<td><a href="tel:'+$tel+ '">'+$tel+ '</a></td>'+
-       		  		'<th>アクセス</th>'+
-        				'<td><button type="button" id="btn" value="'+ roopCount +'">地図に表示</button></td>'+ 
-      		  		'</tr>'
-        		).appendTo('table.tbl tbody'); 
+    			$('<ul data-role="listview">'+
+    			    '<li class="ui-btn ui-btn-icon-left ui-icon-home" data-role="list-divider" data-theme="c">'+$name+'</li>'+
+        		    '<li><a class="ui-btn ui-btn-icon-left ui-icon-info" href="'+$url+'" target="_blank" >詳細情報</a></li>'+
+        		    '<li><a class="ui-btn ui-btn-icon-left ui-icon-phone" href="tel:'+$tel+'">'+$tel+'</a></li>'+
+        		    '<button data-inline="true" class="ui-btn ui-btn-icon-left ui-icon-location" type="button" id="btn" value="'+ roopCount +'">地図に表示</button><br>'+
+     				'<div align="center">(○´･д･)ﾉ-----------ｷﾘﾄﾘ線-----------ヽ(･д･`●)</div>'+
+        		  '</ul>'
+        		).appendTo('div.list'); 
 
      			roopCount++;
 
@@ -97,52 +96,22 @@ if (navigator.geolocation) {
 					$("button").click(makeInfo);
 
 					function makeInfo(){
-					var num = $(this).val();
-					//console.log(num);
-					//console.log(roopCount);
+						var num = $(this).val();
+						//console.log(num);
+						//console.log(roopCount);
 
-					var lat = markersInfo[num * 2    ];
-  					//console.log(lat);
-					var lng = markersInfo[num * 2 + 1];
-					//console.log(lng);
+						var lat = markersInfo[num * 2    ];
+  						//console.log(lat);
+						var lng = markersInfo[num * 2 + 1];
+						//console.log(lng);
 
-					var latlng = new google.maps.LatLng(lat, lng);
-					//console.log(latlng);
+						var latlng = new google.maps.LatLng(lat, lng);
+						//console.log(latlng);
 
-					var marker = new google.maps.Marker({ position: latlng, map: map });
-	}
-});
-
-
-/*
-
-				$(this).click(function(){
-					//alert("チェック");
-			
-
-					var num = $('#btn').val();
-
-					alert(this.value);
-					console.log(roopCount);
-
-					var lat = markersInfo[num * 2    ];
-  					//console.log(lat);
-					var lng = markersInfo[num * 2 + 1];
-					//console.log(lng);
-
-					var latlng = new google.maps.LatLng(lat, lng);
-					//console.log(latlng);
-
-					var marker = new google.maps.Marker({ position: latlng, map: map });
-
-
+						var marker = new google.maps.Marker({ position: latlng, map: map });
+					}
 				});
-
-*/
-
 			}  
-
-
 		},
     //位置情報の取得に失敗した場合
 		function (error) {
@@ -172,9 +141,3 @@ if (navigator.geolocation) {
 	alert("このブラウザでは位置情報が取得できません");
 }
 
-
-/*
-$(function(){
-
-});
-*/
