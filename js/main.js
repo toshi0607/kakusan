@@ -141,6 +141,14 @@ if (navigator.geolocation) {
 						infoWindow.open(map, marker);
 
 
+						google.maps.event.addListener(marker, "click", function(){
+							// 表示内容に店名を設定して、吹き出しを開く
+							var info = markersInfo[num * 3 + 2];
+							infoWindow.setContent(info);
+							infoWindow.open(map, marker);
+						});
+
+
 					}
 				});
 			}  
