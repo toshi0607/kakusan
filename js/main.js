@@ -57,8 +57,10 @@ if (navigator.geolocation) {
 			//世界測地系
 			var coordinates_mode = 2;
 
+			var sort = 1;
+
 			//
-			var uriOption  = '&latitude=' + latitude + '&longitude=' + longitude + '&range=' + range + '&coordinates_mode=' + coordinates_mode;
+			var uriOption  = '&latitude=' + latitude + '&longitude=' + longitude + '&range=' + range + '&coordinates_mode=' + coordinates_mode ;
 
 			//console.log(uriOption);
 
@@ -74,7 +76,7 @@ if (navigator.geolocation) {
 				url:      'ajax.php',
 				data:     {item:uriOption}
 			}).then(function parse_xml(shop_data){
-				//console.log(shop_data);
+				console.log(shop_data);
 				$(shop_data).find('rest').each(disp);
 
 			});
@@ -86,8 +88,9 @@ if (navigator.geolocation) {
     			var $latitude  = $(this).find('latitude' ).text();  
     			var $longitude = $(this).find('longitude').text();  
     			var $url       = $(this).find('url'      ).text();  
-    			var $name      = $(this).find('name'     ).text();  
+    			var $name      = $(this).find('name'     ).text();
      			var $tel       = $(this).find('tel'      ).text();
+     			var $category  = $(this).find('category' ).text();
 
      			//each()実行毎にマーカー作成に用いる配列に緯度・経度を保存
      			markersInfo.push($latitude, $longitude, $name);
@@ -97,8 +100,8 @@ if (navigator.geolocation) {
 
     			//HTMLを生成  
     			$('<ul data-role="listview">'+
-    			    '<li class="ui-btn ui-btn-icon-left ui-icon-home" data-role="list-divider" data-theme="c">'+$name+'</li>'+
-        		    '<li><a class="ui-btn ui-btn-icon-left ui-icon-info" href="'+$url+'" target="_blank" >詳細情報</a></li>'+
+    			    '<li class="ui-btn ui-btn-icon-left ui-icon-home" data-role="list-divider" data-theme="c">'+$name+ '：' + $category + '</li>'+
+        		    '<li><a class="ui-btn ui-btn-icon-left ui-icon-info" href="'+$url+'" target="_blank" >詳細情報（ぐるナビへ）</a></li>'+
         		    '<li><a class="ui-btn ui-btn-icon-left ui-icon-phone" href="tel:'+$tel+'">'+$tel+'</a></li>'+
         		    '<button data-inline="true" class="ui-btn ui-btn-icon-left ui-icon-location" type="button" id="btn" value="'+ roopCount +'">地図に表示</button><br>'+
      				'<div align="center">(○´･д･)ﾉ-----------ｷﾘﾄﾘ線-----------ヽ(･д･`●)</div>'+
