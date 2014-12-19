@@ -1,0 +1,16 @@
+.page_top {
+
+    position:fixed;
+    bottom:10px;
+    right:10px;
+    padding:10px 20px;
+    color:#fff;
+    font-size:15px;
+    text-decoration:none;
+    background:#000;
+}
+
+.page_top:hover {
+    background:#e74c3c;
+}
+
