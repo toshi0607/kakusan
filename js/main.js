@@ -44,8 +44,16 @@ if (navigator.geolocation) {
 
 
 			//食べログリクエスト用のURIのオプションを準備
+			//半径500m以内の店舗を指定
 			var range      = 2;
-			var uriOption  = '&latitude=' + latitude + '&longitude=' + longitude+ '&range=' + range;
+
+			//世界測地系
+			var coordinates_mode = 2;
+
+			//
+			var uriOption  = '&latitude=' + latitude + '&longitude=' + longitude + '&range=' + range + '&coordinates_mode=' + coordinates_mode;
+
+			console.log(uriOption);
 
 			//each()実行毎に店舗緯度経度を格納
 			var markersInfo = [];
