@@ -74,7 +74,7 @@ if (navigator.geolocation) {
 				url:      'ajax.php',
 				data:     {item:uriOption}
 			}).then(function parse_xml(shop_data){
-				console.log(shop_data);
+				//console.log(shop_data);
 				$(shop_data).find('rest').each(disp);
 
 			});
@@ -90,7 +90,7 @@ if (navigator.geolocation) {
      			var $tel       = $(this).find('tel'      ).text();
 
      			//each()実行毎にマーカー作成に用いる配列に緯度・経度を保存
-     			markersInfo.push($latitude, $longitude);
+     			markersInfo.push($latitude, $longitude, $name);
 
      			//console.log(roopCount);　OK
 
@@ -115,9 +115,9 @@ if (navigator.geolocation) {
 						//console.log(num);
 						//console.log(roopCount);
 
-						var lat = markersInfo[num * 2    ];
+						var lat = markersInfo[num * 3    ];
   						//console.log(lat);
-						var lng = markersInfo[num * 2 + 1];
+						var lng = markersInfo[num * 3 + 1];
 						//console.log(lng);
 
 						var latlng = new google.maps.LatLng(lat, lng);
@@ -125,14 +125,20 @@ if (navigator.geolocation) {
 
 						//マーカーオブジェクトを作成		
 						var markerOption = {
-							position : latlng, // カフェの場所
-							map : map, // 表示するマップ
-							icon : "images/icon.jpg" // カスタムアイコンの設定
+							position : latlng,           // 飲み屋の緯度経度
+							map      : map,              // 表示するマップ
+							icon     : "images/icon.jpg" // カスタムアイコンの設定
 						};
 
 
 						var marker = new google.maps.Marker(markerOption);
 
+						//店舗名の取得
+						var info = markersInfo[num * 3 + 2];
+			
+
+						infoWindow.setContent(info);
+						infoWindow.open(map, marker);
 
 
 					}
