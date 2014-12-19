@@ -14,7 +14,9 @@ if (navigator.geolocation) {
 			$(".show_lat_long").append("経度：" + longitude + "<br>");
 
 
-			var map = null;
+			var map        = null;//地図オブジェクト	
+
+			var infoWindow = null;//吹き出しオブジェクト	
 
 			$(function(){
 				//現在地点の緯度経度を元に LatLngオブジェクトを作成する
@@ -40,6 +42,11 @@ if (navigator.geolocation) {
 				//マーカーを作成して現在位置に置く
 				var marker = new google.maps.Marker({ position: latlng, map: map });
 				//console.log(marker); OK
+
+				//吹き出しを予め作成
+				infoWindow = new google.maps.InfoWindow();
+
+
 			}
 
 
@@ -53,7 +60,7 @@ if (navigator.geolocation) {
 			//
 			var uriOption  = '&latitude=' + latitude + '&longitude=' + longitude + '&range=' + range + '&coordinates_mode=' + coordinates_mode;
 
-			console.log(uriOption);
+			//console.log(uriOption);
 
 			//each()実行毎に店舗緯度経度を格納
 			var markersInfo = [];
@@ -116,7 +123,18 @@ if (navigator.geolocation) {
 						var latlng = new google.maps.LatLng(lat, lng);
 						//console.log(latlng);
 
-						var marker = new google.maps.Marker({ position: latlng, map: map });
+						//マーカーオブジェクトを作成		
+						var markerOption = {
+							position : latlng, // カフェの場所
+							map : map, // 表示するマップ
+							icon : "images/icon.jpg" // カスタムアイコンの設定
+						};
+
+
+						var marker = new google.maps.Marker(markerOption);
+
+
+
 					}
 				});
 			}  
